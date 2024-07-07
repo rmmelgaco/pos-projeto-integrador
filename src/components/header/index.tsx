@@ -1,7 +1,7 @@
 export default function Header() {
     return (
         <div className='bg-primary flex flex-row justify-between items-center p-2'>
-            <h1 className='text-white text-[30px]'>
+            <h1 className='text-white text-[30px] font-bold'>
                 UnyBay
             </h1>
             <ul className='flex gap-5 items-center text-white'>
