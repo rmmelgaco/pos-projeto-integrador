@@ -8,7 +8,7 @@ export default function UserTemplate(props: UserTemplateProps) {
     return (
         <div className='min-h-screen flex flex-col'>
             <Header/>
-            <div className='flex flex-1 flex-col p-4'>
+            <div className='flex flex-1 flex-col p-[10%]'>
                 {props.children}
             </div>
             <Footer/>
