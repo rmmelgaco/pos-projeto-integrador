@@ -1,10 +1,9 @@
-import Header from "./components/header";
-import Footer from "./components/footer";
+import UserTemplate from "./templates/user-template";
 
 export default function App() {
     return <div>
-        <Header/>
-        xlkjaçlj açlksj çlkj
-        <Footer/>
+        <UserTemplate>
+            <h1>teste</h1>
+        </UserTemplate>
     </div>
 }
