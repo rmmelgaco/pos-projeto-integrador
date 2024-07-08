@@ -70,7 +70,7 @@ export default function Home() {
             </div>
 
             <h2 className='mt-[50px]'>Itens recentes</h2>
-            <div className='flex flex-wrap'>
+            <div className='grid grid-4 lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2'>
                 <CardProduct/><CardProduct/><CardProduct/><CardProduct/>
             </div>
             <p className='mt-4'>Ver mais</p>
@@ -92,7 +92,7 @@ export default function Home() {
             </div>
 
             <h2 className='mt-[50px]'>Anúncios</h2>
-            <div className='flex flex-wrap'>
+            <div className='grid grid-4 lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2'>
                 <CardProduct/><CardProduct/><CardProduct/><CardProduct/>
             </div>
             <p className='mt-4'>Ver mais</p>
