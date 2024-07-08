@@ -18,7 +18,7 @@ export default function Header() {
                     </Link>
                 </li>
                 <li>
-                    <Link to='quem-somos'>
+                    <Link to='/quem-somos'>
                         Quem somos
                     </Link>
                 </li>
