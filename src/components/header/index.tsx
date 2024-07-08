@@ -8,7 +8,7 @@ export default function Header() {
         <div className='bg-primary flex flex-row justify-between items-center p-2'>
             <button onClick={() => navigate('/')}>
                 <h1 className='text-white text-[30px] font-bold'>
-                    UnyBay
+                    RodrigoBay
                 </h1>
             </button>
             <ul className='flex gap-5 items-center text-white'>
@@ -18,7 +18,7 @@ export default function Header() {
                     </Link>
                 </li>
                 <li>
-                    <Link to='#'>
+                    <Link to='quem-somos'>
                         Quem somos
                     </Link>
                 </li>

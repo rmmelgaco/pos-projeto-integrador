@@ -7,7 +7,6 @@ import {FaTools} from "react-icons/fa";
 import {IoFastFoodOutline, IoSearch} from "react-icons/io5";
 import {Carousel} from 'react-responsive-carousel';
 
-import carousel1 from '../../assets/carousel1.jpeg';
 import {useNavigate} from "react-router-dom";
 
 const itemsCategory = [
@@ -59,13 +58,13 @@ export default function Home() {
             <div className='max-w-[70%] self-center'>
                 <Carousel showThumbs={false}>
                     <div>
-                        <img src={carousel1}/>
+                        <img src='https://i.ebayimg.com/00/s/NDEzWDE2MDA=/z/ZrEAAOSwxGJmcYwL/$_57.JPG'/>
                     </div>
                     <div>
-                        <img src={carousel1}/>
+                        <img src='https://i.ebayimg.com/00/s/NDEzWDE2MDA=/z/ZrEAAOSwxGJmcYwL/$_57.JPG'/>
                     </div>
                     <div>
-                        <img src={carousel1}/>
+                        <img src='https://i.ebayimg.com/00/s/NDEzWDE2MDA=/z/ZrEAAOSwxGJmcYwL/$_57.JPG'/>
                     </div>
                 </Carousel>
                 <div className='flex flex-row border-2 rouded-md h-[45px] items-center mt-10'>
