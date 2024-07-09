@@ -2,6 +2,7 @@ import AuthTemplate from "../../templates/auth-template";
 import {useForm} from "react-hook-form";
 import * as Yup from 'yup'
 import {yupResolver} from '@hookform/resolvers/yup'
+import {useNavigate} from "react-router-dom";
 
 type LoginForm = {
     email: string
@@ -15,11 +16,14 @@ const schemaValidation = Yup.object().shape({
 
 export default function Login() {
 
+    const navigate = useNavigate()
+
     const {register, handleSubmit, formState: {errors}}
         = useForm<LoginForm>(
         {
             resolver: yupResolver(schemaValidation)
         })
+
 
     function logar(values: LoginForm) {
         console.log(values)
@@ -43,7 +47,14 @@ export default function Login() {
                     {errors.password && <span className='text-red-700'>{errors.password.message}</span>}
                 </div>
 
-                <button className='mt-4 bg-primary w-full h-[40px] text-white' type="submit">Entrar</button>
+                <button className='mt-4 bg-primary w-full h-[40px] text-white' type="submit">
+                    Entrar
+                </button>
+                <div className='flex justify-center items-center'>
+                    <button className='mt-4' onClick={() => navigate('/register')}>
+                        Cadastre-se
+                    </button>
+                </div>
             </form>
         </AuthTemplate>
     )
