@@ -8,6 +8,8 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import QuemSomos from "./pages/quem-somos";
 import Login from "./pages/login";
 import Register from "./pages/register";
+import Dashboard from "./pages/dashboard";
+import UserProducts from "./pages/user-products";
 
 export default function App() {
 
@@ -39,6 +41,14 @@ export default function App() {
         {
             path: '/register',
             element: <Register/>
+        },
+        {
+            path: '/dashboard',
+            element: <Dashboard/>
+        },
+        {
+            path: '/my-products',
+            element: <UserProducts/>
         },
         {
             path: '*',
