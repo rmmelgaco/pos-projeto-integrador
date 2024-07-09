@@ -6,6 +6,8 @@ import SearchProducts from "./pages/search-result";
 import NotFound from "./pages/not-found";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import QuemSomos from "./pages/quem-somos";
+import Login from "./pages/login";
+import Register from "./pages/register";
 
 export default function App() {
 
@@ -29,6 +31,14 @@ export default function App() {
         {
             path: '/quem-somos',
             element: <QuemSomos/>
+        },
+        {
+            path: '/login',
+            element: <Login/>
+        },
+        {
+            path: '/register',
+            element: <Register/>
         },
         {
             path: '*',

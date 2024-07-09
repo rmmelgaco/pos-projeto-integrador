@@ -23,7 +23,7 @@ export default function Header() {
                     </Link>
                 </li>
                 <li>
-                    <button className='bg-secondary px-8 py-2 rounded-md hover:bg-orange-600 transition-all'>Entrar
+                    <button onClick={() => navigate('/login')} className='bg-secondary px-8 py-2 rounded-md hover:bg-orange-600 transition-all'>Entrar
                     </button>
                 </li>
             </ul>

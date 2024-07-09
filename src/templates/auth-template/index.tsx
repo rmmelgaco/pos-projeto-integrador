@@ -1,0 +1,19 @@
+import {PropsWithChildren} from "react";
+import Footer from "../../components/footer";
+
+type AuthTemplateProps = PropsWithChildren & {}
+export default function AuthTemplate(props: AuthTemplateProps) {
+
+    return (
+        <div className='min-h-screen flex flex-col bg-gray-100'>
+            <div className='bg-primary flex justify-between p-2'>
+                <h1 className='text-white font-bold text-[30px]'>RodrigoBay</h1>
+                <div/>
+            </div>
+            <div className='flex flex-1 flex-col px-[10%] py-[20px]'>
+                {props.children}
+            </div>
+            <Footer/>
+        </div>
+    )
+}
