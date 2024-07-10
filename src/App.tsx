@@ -10,6 +10,7 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import Dashboard from "./pages/dashboard";
 import UserProducts from "./pages/user-products";
+import FormProduct from "./pages/form-product";
 
 export default function App() {
 
@@ -49,6 +50,10 @@ export default function App() {
         {
             path: '/my-products',
             element: <UserProducts/>
+        },
+        {
+            path: '/form-product',
+            element: <FormProduct/>
         },
         {
             path: '*',

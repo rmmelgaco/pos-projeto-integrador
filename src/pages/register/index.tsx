@@ -44,31 +44,31 @@ export default function Register() {
 
                 <div>
                     <input {...register('name')} type="text"
-                           className='w-full border-2 h-[40px] px-2 rouded-md'
+                           className='w-full border-2 h-[40px] px-2 rounded-md'
                            placeholder='Digite seu nome'/>
                     {errors.name && <span className='text-red-700'>{errors.name.message}</span>}
                 </div>
                 <div>
                     <input {...register('email')} type="email"
-                           className='w-full border-2 h-[40px] px-2 rouded-md mt-2'
+                           className='w-full border-2 h-[40px] px-2 rounded-md mt-2'
                            placeholder='Digite seu e-mail'/>
                     {errors.email && <span className='text-red-700'>{errors.email.message}</span>}
                 </div>
                 <div>
                     <input {...register('phone')} type="text"
-                           className='w-full border-2 h-[40px] px-2 rouded-md mt-2'
+                           className='w-full border-2 h-[40px] px-2 rounded-md mt-2'
                            placeholder='Digite seu telefone'/>
                     {errors.phone && <span className='text-red-700'>{errors.phone.message}</span>}
                 </div>
                 <div>
                     <input {...register('city')} type="text"
-                           className='w-full border-2 h-[40px] px-2 rouded-md mt-2'
+                           className='w-full border-2 h-[40px] px-2 rounded-md mt-2'
                            placeholder='Digite sua cidade'/>
                     {errors.city && <span className='text-red-700'>{errors.city.message}</span>}
                 </div>
                 <div>
                     <input {...register('state')} type="text"
-                           className='w-full border-2 h-[40px] px-2 rouded-md mt-2'
+                           className='w-full border-2 h-[40px] px-2 rounded-md mt-2'
                            placeholder='Digite seu estado'/>
                     {errors.state && <span className='text-red-700'>{errors.state.message}</span>}
                 </div>
