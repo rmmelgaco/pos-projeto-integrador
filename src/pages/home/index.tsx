@@ -11,6 +11,7 @@ import {useNavigate} from "react-router-dom";
 import {getApiRecentProducts, getApiRecommendedProducts} from "./services.ts";
 import {useEffect, useState} from "react";
 import {Product} from "./types.ts";
+import ListLoading from "../../components/list-loading";
 
 const itemsCategory = [
     {
@@ -55,35 +56,40 @@ export default function Home() {
 
     const navigate = useNavigate()
 
-    const [re, setRe] = useState<Product[]>([])
+    const [recentProducts, setRecentProducts] = useState<Product[]>([])
+    const [loadingRecentProducts, setLoadingRecentProducts] = useState<boolean>(true)
     const [recommendedProducts, setRecommendedProducts] = useState<Product[]>([])
+    const [loadingRecommendedProducts, setLoadingRecommendedProducts] = useState<boolean>(true)
 
     async function getRecentProducts() {
         try {
+            setLoadingRecentProducts(true)
             const response = await getApiRecentProducts()
-            setRe(response.data)
+            setRecentProducts(response.data)
         } catch (error: any) {
             alert(`Erro ao buscar produtos recentes - ${error.message}`)
         }
+        setLoadingRecentProducts(false)
     }
 
     async function getRecommendedProducts() {
         try {
+            setLoadingRecommendedProducts(true)
             const response = await getApiRecommendedProducts()
             setRecommendedProducts(response.data)
         } catch (error: any) {
             alert(`Erro ao buscar produtos recomendados - ${error.message}`)
         }
-
+        setLoadingRecommendedProducts(false)
     }
 
     useEffect(() => {
         getRecentProducts()
-    },[])
+    }, [])
 
     useEffect(() => {
         getRecommendedProducts()
-    },[])
+    }, [])
 
     return (
         <UserTemplate>
@@ -109,9 +115,10 @@ export default function Home() {
             </div>
 
             <h2 className='mt-[50px]'>Itens recentes</h2>
+            {loadingRecentProducts && <ListLoading/>}
             <div className='grid grid-4 lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2'>
-                {re.map((product) => (
-                    <CardProduct key={product._id} product={product}/>
+                {recentProducts.map((product) => (
+                    <CardProduct key={`recent-${product._id}`} product={product}/>
                 ))}
             </div>
             <p className='mt-4'>Ver mais</p>
@@ -122,7 +129,8 @@ export default function Home() {
                 </h2>
                 <div className='flex justify-between px-[10%]'>
                     {itemsCategory.map((category, index) => (
-                        <button key={index} onClick={() => navigate('/products/search')} className='flex flex-col justify-center items-center'>
+                        <button key={index} onClick={() => navigate('/products/search')}
+                                className='flex flex-col justify-center items-center'>
                             <div
                                 className='bg-white w-[80px] h-[80px] rounded-full flex justify-center items-center'>{category.icon}</div>
                             <p className='text-white mt-2'>{category.title}</p>
@@ -133,9 +141,10 @@ export default function Home() {
             </div>
 
             <h2 className='mt-[50px]'>Anúncios</h2>
+            {loadingRecommendedProducts && <ListLoading/>}
             <div className='grid grid-4 lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2'>
                 {recommendedProducts.map((product) => (
-                    <CardProduct key={product._id} product={product}/>
+                    <CardProduct key={`recommended-${product._id}`} product={product}/>
                 ))}
             </div>
             <p className='mt-4'>Ver mais</p>
