@@ -149,7 +149,9 @@ export default function Home() {
                     <CardProduct key={`recommended-${product._id}`} product={product}/>
                 ))}
             </div>
-            <p className='mt-4'>Ver mais</p>
+            <Link to='/all-products'>
+                <p className='mt-4'>Ver todos os produtos</p>
+            </Link>
         </UserTemplate>
     )
 }

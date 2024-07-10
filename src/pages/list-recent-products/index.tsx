@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import {Product} from "../home/types.ts";
 import ListLoading from "../../components/list-loading";
 
-export default function ListRecentProducts() {
+export default function ListAllRecentProducts() {
 
     const [allRecentProducts, setAllRecentProducts] = useState<Product[]>([])
     const [loadingRecentProducts, setLoadingRecentProducts] = useState<boolean>(true)
