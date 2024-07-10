@@ -8,6 +8,9 @@ import {IoFastFoodOutline, IoSearch} from "react-icons/io5";
 import {Carousel} from 'react-responsive-carousel';
 
 import {useNavigate} from "react-router-dom";
+import {getApiRecentProducts} from "./services.ts";
+import {useEffect, useState} from "react";
+import {Product} from "./types.ts";
 
 const itemsCategory = [
     {
@@ -52,6 +55,21 @@ export default function Home() {
 
     const navigate = useNavigate()
 
+    const [recentProducts, setRecentProducts] = useState<Product[]>([])
+
+    async function getRecentProducts() {
+        try {
+            const response = await getApiRecentProducts()
+            setRecentProducts(response.data)
+        } catch (error: any) {
+            alert(`Erro ao buscar produtos recentes - ${error.message}`)
+        }
+    }
+
+    useEffect(() => {
+        getRecentProducts()
+    },[])
+
     return (
         <UserTemplate>
 
@@ -77,8 +95,9 @@ export default function Home() {
 
             <h2 className='mt-[50px]'>Itens recentes</h2>
             <div className='grid grid-4 lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2'>
-                <CardProduct/><CardProduct/><CardProduct/><CardProduct/>
-                <CardProduct/><CardProduct/><CardProduct/><CardProduct/>
+                {recentProducts.map((product) => (
+                    <CardProduct key={product._id}/>
+                ))}
             </div>
             <p className='mt-4'>Ver mais</p>
 
@@ -87,8 +106,8 @@ export default function Home() {
                     Categorias
                 </h2>
                 <div className='flex justify-between px-[10%]'>
-                    {itemsCategory.map((category) => (
-                        <button onClick={() => navigate('/products/search')} className='flex flex-col justify-center items-center'>
+                    {itemsCategory.map((category, index) => (
+                        <button key={index} onClick={() => navigate('/products/search')} className='flex flex-col justify-center items-center'>
                             <div
                                 className='bg-white w-[80px] h-[80px] rounded-full flex justify-center items-center'>{category.icon}</div>
                             <p className='text-white mt-2'>{category.title}</p>
