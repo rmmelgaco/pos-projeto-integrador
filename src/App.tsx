@@ -1,6 +1,6 @@
 import {createBrowserRouter, RouterProvider,} from "react-router-dom";
 import Home from "./pages/home";
-import ListProducts from "./pages/list-products";
+import ListRecentProducts from "./pages/list-recent-products";
 import Details from "./pages/details";
 import SearchProducts from "./pages/search-result";
 import NotFound from "./pages/not-found";
@@ -22,8 +22,8 @@ export default function App() {
             element: <Home/>,
         },
         {
-            path: "/products",
-            element: <ListProducts/>
+            path: "/all-recent-products",
+            element: <ListRecentProducts/>
         },
         {
             path: "/products/details",

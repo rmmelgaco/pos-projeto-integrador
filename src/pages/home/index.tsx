@@ -7,7 +7,7 @@ import {FaTools} from "react-icons/fa";
 import {IoFastFoodOutline, IoSearch} from "react-icons/io5";
 import {Carousel} from 'react-responsive-carousel';
 
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {getApiRecentProducts, getApiRecommendedProducts} from "./services.ts";
 import {useEffect, useState} from "react";
 import {Product} from "./types.ts";
@@ -116,12 +116,14 @@ export default function Home() {
 
             <h2 className='mt-[50px]'>Itens recentes</h2>
             {loadingRecentProducts && <ListLoading/>}
-            <div className='grid grid-4 lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2'>
+            <div className='grid grid-4 lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2'>
                 {recentProducts.map((product) => (
                     <CardProduct key={`recent-${product._id}`} product={product}/>
                 ))}
             </div>
-            <p className='mt-4'>Ver mais</p>
+            <Link to='/all-recent-products'>
+                <p className='mt-4'>Ver todos os produtos recentes</p>
+            </Link>
 
             <div className='bg-primary p-10 rounded-lg mt-[50px]'>
                 <h2 className='text-white text-[20px] mb-5'>
@@ -142,7 +144,7 @@ export default function Home() {
 
             <h2 className='mt-[50px]'>Anúncios</h2>
             {loadingRecommendedProducts && <ListLoading/>}
-            <div className='grid grid-4 lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2'>
+            <div className='grid grid-4 lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2'>
                 {recommendedProducts.map((product) => (
                     <CardProduct key={`recommended-${product._id}`} product={product}/>
                 ))}
