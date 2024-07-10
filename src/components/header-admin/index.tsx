@@ -23,6 +23,11 @@ export default function HeaderAdmin() {
                     </Link>
                 </li>
                 <li>
+                    <Link to='/fale-conosco-admin'>
+                        Fale conosco
+                    </Link>
+                </li>
+                <li>
                     <button>
                         Sair
                     </button>

@@ -37,13 +37,13 @@ export default function Login() {
 
                 <div>
                     <input {...register('email')} type="email"
-                           className='w-full border-2 h-[40px] px-2 rouded-md'
+                           className='w-full border-2 h-[40px] px-2 rounded-md'
                            placeholder='Digite seu e-mail'/>
                     {errors.email && <span className='text-red-700'>{errors.email.message}</span>}
                 </div>
                 <div>
                     <input {...register('password')} type="password" placeholder="Digite sua senha"
-                           className='w-full border-2 h-[40px] px-2 rouded-md mt-3'/>
+                           className='w-full border-2 h-[40px] px-2 rounded-md mt-3'/>
                     {errors.password && <span className='text-red-700'>{errors.password.message}</span>}
                 </div>
 

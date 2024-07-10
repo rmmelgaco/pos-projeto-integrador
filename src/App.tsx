@@ -11,6 +11,8 @@ import Register from "./pages/register";
 import Dashboard from "./pages/dashboard";
 import UserProducts from "./pages/user-products";
 import FormProduct from "./pages/form-product";
+import FaleConosco from "./pages/fale-conosco";
+import FaleConoscoAdmin from "./pages/fale-conosco-admin";
 
 export default function App() {
 
@@ -56,6 +58,14 @@ export default function App() {
             element: <FormProduct/>
         },
         {
+            path: '/fale-conosco',
+            element: <FaleConosco/>
+        },
+        {
+            path: '/fale-conosco-admin',
+            element: <FaleConoscoAdmin/>
+        },
+        {
             path: '*',
             element: <NotFound/>
         }
@@ -63,8 +73,5 @@ export default function App() {
 
     return <div>
         <RouterProvider router={router}/>
-        {/*<UserTemplate>*/}
-        {/*    <h1>teste</h1>*/}
-        {/*</UserTemplate>*/}
     </div>
 }

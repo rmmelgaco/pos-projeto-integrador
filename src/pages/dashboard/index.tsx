@@ -65,7 +65,7 @@ export default function Dashboard() {
                         <img src='https://i.ebayimg.com/00/s/NDEzWDE2MDA=/z/ZrEAAOSwxGJmcYwL/$_57.JPG'/>
                     </div>
                 </Carousel>
-                <div className='flex flex-row border-2 rouded-md h-[45px] items-center mt-10'>
+                <div className='flex flex-row border-2 rounded-md h-[45px] items-center mt-10'>
                     <input className='flex-1 h-full p-3' placeholder='Estou buscando por...'/>
                     <button className='px-4' onClick={() => navigate('/products/search')}>
                         <IoSearch size={30}/>

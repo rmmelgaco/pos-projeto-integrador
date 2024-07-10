@@ -74,7 +74,7 @@ export default function Register() {
                 </div>
                 <div>
                     <input {...register('password')} type="password" placeholder="Digite sua senha"
-                           className='w-full border-2 h-[40px] px-2 rouded-md mt-2'/>
+                           className='w-full border-2 h-[40px] px-2 rounded-md mt-2'/>
                     {errors.password && <span className='text-red-700'>{errors.password.message}</span>}
                 </div>
 
