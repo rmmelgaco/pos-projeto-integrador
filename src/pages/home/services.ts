@@ -5,3 +5,7 @@ import {Product} from "./types.ts";
 export async function getApiRecentProducts(): Promise<AxiosResponse<Product[], any>> {
     return await api.get('/products/recents')
 }
+
+export async function getApiRecommendedProducts(): Promise<AxiosResponse<Product[], any>> {
+    return await api.get('/products/recommended')
+}

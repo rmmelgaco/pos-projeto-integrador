@@ -8,7 +8,7 @@ import {IoFastFoodOutline, IoSearch} from "react-icons/io5";
 import {Carousel} from 'react-responsive-carousel';
 
 import {useNavigate} from "react-router-dom";
-import {getApiRecentProducts} from "./services.ts";
+import {getApiRecentProducts, getApiRecommendedProducts} from "./services.ts";
 import {useEffect, useState} from "react";
 import {Product} from "./types.ts";
 
@@ -55,19 +55,34 @@ export default function Home() {
 
     const navigate = useNavigate()
 
-    const [recentProducts, setRecentProducts] = useState<Product[]>([])
+    const [re, setRe] = useState<Product[]>([])
+    const [recommendedProducts, setRecommendedProducts] = useState<Product[]>([])
 
     async function getRecentProducts() {
         try {
             const response = await getApiRecentProducts()
-            setRecentProducts(response.data)
+            setRe(response.data)
         } catch (error: any) {
             alert(`Erro ao buscar produtos recentes - ${error.message}`)
         }
     }
 
+    async function getRecommendedProducts() {
+        try {
+            const response = await getApiRecommendedProducts()
+            setRecommendedProducts(response.data)
+        } catch (error: any) {
+            alert(`Erro ao buscar produtos recomendados - ${error.message}`)
+        }
+
+    }
+
     useEffect(() => {
         getRecentProducts()
+    },[])
+
+    useEffect(() => {
+        getRecommendedProducts()
     },[])
 
     return (
@@ -95,8 +110,8 @@ export default function Home() {
 
             <h2 className='mt-[50px]'>Itens recentes</h2>
             <div className='grid grid-4 lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2'>
-                {recentProducts.map((product) => (
-                    <CardProduct key={product._id}/>
+                {re.map((product) => (
+                    <CardProduct key={product._id} product={product}/>
                 ))}
             </div>
             <p className='mt-4'>Ver mais</p>
@@ -119,8 +134,9 @@ export default function Home() {
 
             <h2 className='mt-[50px]'>Anúncios</h2>
             <div className='grid grid-4 lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2'>
-                <CardProduct/><CardProduct/><CardProduct/><CardProduct/>
-                <CardProduct/><CardProduct/><CardProduct/><CardProduct/>
+                {recommendedProducts.map((product) => (
+                    <CardProduct key={product._id} product={product}/>
+                ))}
             </div>
             <p className='mt-4'>Ver mais</p>
         </UserTemplate>
