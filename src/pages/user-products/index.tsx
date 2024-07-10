@@ -1,5 +1,5 @@
 import AdminTemplate from "../../templates/admin-template";
-import CardProduct from "../../components/card-product";
+import CardProductAdmin from "../../components/card-product-admin";
 
 export default function UserProducts() {
     return (
@@ -16,7 +16,7 @@ export default function UserProducts() {
             <div className='grid grid-4 lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2'>
                 {
                     Array.from({length: 14}).map(() => (
-                        <CardProduct/>
+                        <CardProductAdmin/>
                     ))
                 }
             </div>
