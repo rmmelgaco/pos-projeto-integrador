@@ -38,6 +38,7 @@ export default function FormProduct() {
     return (
         <div>
             <AdminTemplate>
+                <h1 className='text-[25px] mb-4'>Novo produto</h1>
                 <form>
                     <div className='flex gap-2'>
                         <div className='flex-1'>
@@ -89,9 +90,17 @@ export default function FormProduct() {
                     <ReactQuill theme="snow"
                                 style={{height: 500, marginTop: 10, marginBottom: 100}}
                                 value={value} onChange={setValue}/>
-                    <button className='mt-4 bg-primary w-full h-[40px] text-white' type="submit">
-                        Salvar
-                    </button>
+                    <div className='flex justify-end gap-4 mt-4'>
+                        <button className='bg-primary text-white px-8 py-2 rounded-lg'>
+                            Salvar
+                        </button>
+                        <button
+                            className='bg-white text-primary border border-primary px-8 py-2 rounded-lg'
+                            onClick={() => alert('nao')}
+                        >
+                            Cancelar
+                        </button>
+                    </div>
                 </form>
             </AdminTemplate>
         </div>
