@@ -35,7 +35,7 @@ export default function App() {
             element: <Details/>
         },
         {
-            path: "/products/search",
+            path: "/products/search/:productToSearch",
             element: <SearchProducts/>
         },
         {

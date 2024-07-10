@@ -60,6 +60,7 @@ export default function Home() {
     const [loadingRecentProducts, setLoadingRecentProducts] = useState<boolean>(true)
     const [recommendedProducts, setRecommendedProducts] = useState<Product[]>([])
     const [loadingRecommendedProducts, setLoadingRecommendedProducts] = useState<boolean>(true)
+    const [inputProductToSearch, setInputProductToSearch] = useState<string>('')
 
     async function getRecentProducts() {
         try {
@@ -107,8 +108,10 @@ export default function Home() {
                     </div>
                 </Carousel>
                 <div className='flex flex-row border-2 rounded-md h-[45px] items-center mt-10'>
-                    <input className='flex-1 h-full p-3' placeholder='Estou buscando por...'/>
-                    <button className='px-4' onClick={() => navigate('/products/search')}>
+                    <input className='flex-1 h-full p-3' placeholder='Estou buscando por...'
+                           onChange={(e) => setInputProductToSearch(e.target.value)}
+                    />
+                    <button className='px-4' onClick={() => navigate(`/products/search/${inputProductToSearch}`)}>
                         <IoSearch size={30}/>
                     </button>
                 </div>
