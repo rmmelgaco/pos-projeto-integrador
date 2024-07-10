@@ -31,7 +31,7 @@ export default function App() {
             element: <ListAllProducts/>
         },
         {
-            path: "/products/details",
+            path: "/products/details/:productId",
             element: <Details/>
         },
         {
