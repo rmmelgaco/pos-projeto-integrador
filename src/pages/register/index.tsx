@@ -3,15 +3,9 @@ import * as Yup from "yup";
 import {yupResolver} from '@hookform/resolvers/yup'
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
-
-type RegisterForm = {
-    name: string,
-    email: string,
-    phone: string,
-    city: string,
-    state: string,
-    password: string
-}
+import {RegisterForm} from "./types.ts";
+import {registerUser} from "./services.ts";
+import {toast, ToastContainer} from "react-toastify";
 
 const schemaValidation = Yup.object().shape({
     name: Yup.string().required("Nome obrigatório"),
@@ -24,7 +18,9 @@ const schemaValidation = Yup.object().shape({
 
 export default function Register() {
 
-    const {register, handleSubmit, formState: {errors}}
+    const {
+        register, handleSubmit, reset, formState: {errors}
+    }
         = useForm<RegisterForm>(
         {
             resolver: yupResolver(schemaValidation)
@@ -32,7 +28,15 @@ export default function Register() {
 
     const navigate = useNavigate()
 
-    function createUser(values: RegisterForm) {
+    async function createUser(values: RegisterForm) {
+
+        try {
+            await registerUser(values)
+            toast.success('Usuário cadastrado com sucesso!')
+            reset()
+        } catch (error: any) {
+            toast.error(`Não foi possível fazer login. Tente novamente mais tarde. Erro - ${error.response.data.message}`)
+        }
         console.log(values)
     }
 
@@ -79,14 +83,27 @@ export default function Register() {
                 </div>
 
                 <button className='mt-4 bg-primary w-full h-[40px] text-white' type="submit">
-                    Entrar
+                    Cadastrar
                 </button>
                 <div className='flex justify-center items-center'>
-                    <button className='mt-4' onClick={() => navigate('/register')}>
-                        Cadastre-se
+                    <button className='mt-4' onClick={() => navigate('/login')}>
+                        Entrar
                     </button>
                 </div>
             </form>
+            <ToastContainer
+                position="bottom-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
+
         </AuthTemplate>
     )
 }
