@@ -12,6 +12,8 @@ import {getApiRecentProducts, getApiRecommendedProducts} from "./services.ts";
 import {useEffect, useState} from "react";
 import {Product} from "./types.ts";
 import ListLoading from "../../components/list-loading";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const itemsCategory = [
     {
@@ -68,7 +70,7 @@ export default function Home() {
             const response = await getApiRecentProducts()
             setRecentProducts(response.data)
         } catch (error: any) {
-            alert(`Erro ao buscar produtos recentes - ${error.message}`)
+            toast.error(`Erro ao buscar produtos recentes - ${error.message}`)
         }
         setLoadingRecentProducts(false)
     }
@@ -79,7 +81,7 @@ export default function Home() {
             const response = await getApiRecommendedProducts()
             setRecommendedProducts(response.data)
         } catch (error: any) {
-            alert(`Erro ao buscar produtos recomendados - ${error.message}`)
+            toast.error(`Erro ao buscar produtos recomendados - ${error.message}`)
         }
         setLoadingRecommendedProducts(false)
     }
@@ -155,6 +157,18 @@ export default function Home() {
             <Link to='/all-products'>
                 <p className='mt-4'>Ver todos os produtos</p>
             </Link>
+            <ToastContainer
+                position="bottom-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </UserTemplate>
     )
 }

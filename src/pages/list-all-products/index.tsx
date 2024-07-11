@@ -1,9 +1,10 @@
 import UserTemplate from "../../templates/user-template";
 import CardProduct from "../../components/card-product";
-import {getApiAllProducts, getApiAllProductsOrderedByPrice} from "./services.ts";
 import {useEffect, useState} from "react";
 import {Product} from "../home/types.ts";
 import ListLoading from "../../components/list-loading";
+import {getApiAllProducts, getApiAllProductsOrderedByPrice} from "./services.ts";
+import {toast, ToastContainer} from "react-toastify";
 
 export default function ListAllProducts() {
 
@@ -17,7 +18,7 @@ export default function ListAllProducts() {
             const response = await getApiAllProducts()
             setAllProducts(response.data)
         } catch (error: any) {
-            alert(`Erro ao buscar todos os produtos - ${error.message}`)
+            toast.error(`Erro ao buscar todos os produtos - ${error.message}`)
         }
         setLoadingAllProducts(false)
     }
@@ -29,7 +30,7 @@ export default function ListAllProducts() {
             const response = await getApiAllProductsOrderedByPrice(orderType)
             setAllProducts(response.data)
         } catch (error: any) {
-            alert(`Erro ao buscar todos os produtos ordenados pelo preço - ${error.message}`)
+            toast.error(`Erro ao buscar todos os produtos ordenados pelo preço - ${error.message}`)
         }
         setLoadingAllProducts(false)
     }
@@ -62,6 +63,18 @@ export default function ListAllProducts() {
                         <CardProduct key={`recent-${product._id}`} product={product}/>
                     ))}
                 </div>
+                <ToastContainer
+                    position="bottom-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
             </UserTemplate>
         </div>
     )

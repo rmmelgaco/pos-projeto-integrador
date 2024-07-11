@@ -4,6 +4,7 @@ import {getApiAllRecentProducts} from "./services.ts";
 import {useEffect, useState} from "react";
 import {Product} from "../home/types.ts";
 import ListLoading from "../../components/list-loading";
+import {toast, ToastContainer} from "react-toastify";
 
 export default function ListAllRecentProducts() {
 
@@ -16,7 +17,7 @@ export default function ListAllRecentProducts() {
             const response = await getApiAllRecentProducts()
             setAllRecentProducts(response.data)
         } catch (error: any) {
-            alert(`Erro ao buscar todos os produtos recentes - ${error.message}`)
+            toast.error(`Erro ao buscar todos os produtos recentes - ${error.message}`)
         }
         setLoadingRecentProducts(false)
     }
@@ -38,6 +39,18 @@ export default function ListAllRecentProducts() {
                         <CardProduct key={`recent-${product._id}`} product={product}/>
                     ))}
                 </div>
+                <ToastContainer
+                    position="bottom-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
             </UserTemplate>
         </div>
     )

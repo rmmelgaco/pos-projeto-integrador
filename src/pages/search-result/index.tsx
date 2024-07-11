@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {getApiAllProductsByName} from "./services.ts";
 import {Product} from "../home/types.ts";
 import ListLoading from "../../components/list-loading";
+import {toast, ToastContainer} from "react-toastify";
 
 export default function SearchProducts() {
 
@@ -19,7 +20,7 @@ export default function SearchProducts() {
             const response = await getApiAllProductsByName(productToSearch!)
             setAllProducts(response.data)
         } catch (error: any) {
-            alert('Erro ao buscar produtos pelo nome - ' + error.message)
+            toast.error('Erro ao buscar produtos pelo nome - ' + error.message)
         }
         setLoadingAllProducts(false)
     }
@@ -43,6 +44,18 @@ export default function SearchProducts() {
                 </div>
 
                 <p>Total: {allProducts.length} {allProducts.length > 1 ? 'itens' : 'item'}</p>
+                <ToastContainer
+                    position="bottom-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
             </UserTemplate>
         </div>
     )
