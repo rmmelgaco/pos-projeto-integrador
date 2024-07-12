@@ -6,6 +6,7 @@ import {useNavigate} from "react-router-dom";
 import {LoginForm} from "./types.ts";
 import {auth} from "./services.ts";
 import {showErrorMessage} from "../../services/toastUtil.ts";
+import {useAuthSessionStore} from "../../hooks/use-auth-session.ts";
 
 const schemaValidation = Yup.object().shape({
     email: Yup.string().email("Digite um e-mail válido").required("E-mail obrigatório"),
@@ -15,6 +16,7 @@ const schemaValidation = Yup.object().shape({
 export default function Login() {
 
     const navigate = useNavigate()
+    const {setToken} = useAuthSessionStore()
 
     const {register, handleSubmit, formState: {errors}}
         = useForm<LoginForm>(
@@ -25,7 +27,8 @@ export default function Login() {
 
     async function logar(values: LoginForm) {
         try {
-            await auth(values)
+            const response = await auth(values)
+            setToken(response.data?.token)
             navigate('/dashboard')
         } catch (error: any) {
             showErrorMessage('Erro ao logar', error)
