@@ -33,8 +33,8 @@ export default function HeaderAdmin() {
                     </button>
                 </li>
                 <li>
-                    <button
-                        className='bg-white px-8 py-2 rounded-md transition-all text-secondary'>Anunciar
+                    <button onClick={() => navigate('/my-products')}
+                            className='bg-white px-8 py-2 rounded-md transition-all text-secondary'>Anunciar
                     </button>
                 </li>
             </ul>

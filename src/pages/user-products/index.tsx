@@ -1,10 +1,33 @@
 import AdminTemplate from "../../templates/admin-template";
-import CardProductAdmin from "../../components/card-product-admin";
 import {useNavigate} from "react-router-dom";
+import {getApiMyProducts} from "./services.ts";
+import {useAuthSessionStore} from "../../hooks/use-auth-session.ts";
+import {showErrorMessage} from "../../services/toastUtil.ts";
+import {useEffect, useState} from "react";
+import {Product} from "../home/types.ts";
+import CardProductAdmin from "../../components/card-product-admin";
 
 export default function UserProducts() {
 
     const navigate = useNavigate()
+
+    const {token} = useAuthSessionStore()
+
+    const [myProducts, setMyProducts] = useState<Product[]>([])
+
+    async function getMyProducts() {
+
+        try {
+            const response = await getApiMyProducts(token)
+            setMyProducts(response.data)
+        } catch (error: any) {
+            showErrorMessage('Erro ao buscar produtos do usuário', error)
+        }
+    }
+
+    useEffect(() => {
+        getMyProducts()
+    }, [])
 
     return (
         <AdminTemplate>
@@ -21,14 +44,12 @@ export default function UserProducts() {
             </div>
 
             <div className='grid grid-4 lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2'>
-                {
-                    Array.from({length: 14}).map(() => (
-                        <CardProductAdmin/>
-                    ))
-                }
+                {myProducts.map((product) => (
+                    <CardProductAdmin key={`my-product-${product._id}`} product={product}/>
+                ))}
             </div>
 
-            <p className='text-right'>Total: 4 itens</p>
+            <p>Total: {myProducts.length} {myProducts.length > 1 ? 'itens' : 'item'}</p>
         </AdminTemplate>
     )
 }
