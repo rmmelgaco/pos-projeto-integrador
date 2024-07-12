@@ -43,7 +43,7 @@ export default function SearchProducts() {
                     ))}
                 </div>
 
-                <p>Total: {allProducts.length} {allProducts.length > 1 ? 'itens' : 'item'}</p>
+                <p>Total: {allProducts.length} {allProducts.length !== 1 ? 'itens' : 'item'}</p>
             </UserTemplate>
         </div>
     )

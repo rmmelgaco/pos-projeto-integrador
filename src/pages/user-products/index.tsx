@@ -49,7 +49,7 @@ export default function UserProducts() {
                 ))}
             </div>
 
-            <p>Total: {myProducts.length} {myProducts.length > 1 ? 'itens' : 'item'}</p>
+            <p>Total: {myProducts.length} {myProducts.length !== 1 ? 'itens' : 'item'}</p>
         </AdminTemplate>
     )
 }
