@@ -1,6 +1,7 @@
 import {PropsWithChildren} from "react";
 import Footer from "../../components/footer";
 import {useNavigate} from "react-router-dom";
+import {ToastContainer} from "react-toastify";
 
 type AuthTemplateProps = PropsWithChildren & {}
 export default function AuthTemplate(props: AuthTemplateProps) {
@@ -18,6 +19,19 @@ export default function AuthTemplate(props: AuthTemplateProps) {
             <div className='flex flex-1 flex-col px-[10%] py-[20px] justify-center'>
                 {props.children}
             </div>
+            <ToastContainer
+                position="bottom-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
+
             <Footer/>
         </div>
     )

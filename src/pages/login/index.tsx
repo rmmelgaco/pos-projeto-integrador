@@ -3,11 +3,9 @@ import {useForm} from "react-hook-form";
 import * as Yup from 'yup'
 import {yupResolver} from '@hookform/resolvers/yup'
 import {useNavigate} from "react-router-dom";
-
-type LoginForm = {
-    email: string
-    password: string
-}
+import {LoginForm} from "./types.ts";
+import {auth} from "./services.ts";
+import {showErrorMessage} from "../../services/toastUtil.ts";
 
 const schemaValidation = Yup.object().shape({
     email: Yup.string().email("Digite um e-mail válido").required("E-mail obrigatório"),
@@ -25,8 +23,13 @@ export default function Login() {
         })
 
 
-    function logar(values: LoginForm) {
-        console.log(values)
+    async function logar(values: LoginForm) {
+        try {
+            await auth(values)
+            navigate('/dashboard')
+        } catch (error: any) {
+            showErrorMessage('Erro ao logar', error)
+        }
     }
 
     return (

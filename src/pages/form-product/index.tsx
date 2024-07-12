@@ -5,15 +5,10 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {useState} from "react";
-
-type FormProduct = {
-    name: string;
-    manufactorer: string;
-    category: string;
-    price: number;
-    url1: string;
-    url2: string;
-}
+import {FormNewProduct} from "./types.ts";
+import {saveApiProduct} from "./services.ts";
+import {toast} from "react-toastify";
+import {showErrorMessage} from "../../services/toastUtil.ts";
 
 const schemaValidation = Yup.object().shape({
     name: Yup.string().required("Nome obrigatório"),
@@ -21,25 +16,36 @@ const schemaValidation = Yup.object().shape({
     category: Yup.string().required("Categoria obrigatória"),
     price: Yup.number().required("Preço obrigatória"),
     url1: Yup.string().required("Url1 obrigatória"),
-    url2: Yup.string().required("Url2 obrigatória")
+    url2: Yup.string().required("Url2 obrigatória"),
+    description: Yup.string()
 })
 
 export default function FormProduct() {
 
-    const [value, setValue] = useState()
+    const [description, setDescription] = useState<string>()
 
     const {
         register,
+        handleSubmit,
         formState: {errors}
-    } = useForm<FormProduct>({
+    } = useForm<FormNewProduct>({
         resolver: yupResolver(schemaValidation)
     })
+
+    async function saveProduct(values: FormNewProduct) {
+        try {
+            await saveApiProduct({...values, description}, 'xxx')
+            toast.success('Produto cadastrado com sucesso!')
+        } catch (error: any) {
+            showErrorMessage('Erro ao salvar o produto', error)
+        }
+    }
 
     return (
         <div>
             <AdminTemplate>
                 <h1 className='text-[25px] mb-4'>Novo produto</h1>
-                <form>
+                <form onSubmit={handleSubmit(saveProduct)}>
                     <div className='flex gap-2'>
                         <div className='flex-1'>
                             <input
@@ -58,7 +64,7 @@ export default function FormProduct() {
                         <div className='flex-1'>
                             <select {...register("category")}
                                     className='w-full border-2 h-[40px] px-2 rounded-md'>
-                                <option disabled>Selecione uma opção</option>
+                                <option disabled selected>Selecione uma opção</option>
                                 <option value={"Jogos"}>Jogos</option>
                                 <option value={"Roupas"}>Roupas</option>
                                 <option value={"Veiculos"}>Veículos</option>
@@ -89,9 +95,9 @@ export default function FormProduct() {
                     </div>
                     <ReactQuill theme="snow"
                                 style={{height: 500, marginTop: 10, marginBottom: 100}}
-                                value={value} onChange={setValue}/>
+                                value={description} onChange={setDescription}/>
                     <div className='flex justify-end gap-4 mt-4'>
-                        <button className='bg-primary text-white px-8 py-2 rounded-lg'>
+                        <button type='submit' className='bg-primary text-white px-8 py-2 rounded-lg'>
                             Salvar
                         </button>
                         <button

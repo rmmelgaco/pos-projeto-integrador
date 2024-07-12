@@ -5,7 +5,8 @@ import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import {RegisterForm} from "./types.ts";
 import {registerUser} from "./services.ts";
-import {toast, ToastContainer} from "react-toastify";
+import {toast} from "react-toastify";
+import {showErrorMessage} from "../../services/toastUtil.ts";
 
 const schemaValidation = Yup.object().shape({
     name: Yup.string().required("Nome obrigatório"),
@@ -35,7 +36,7 @@ export default function Register() {
             toast.success('Usuário cadastrado com sucesso!')
             reset()
         } catch (error: any) {
-            toast.error(`Não foi possível fazer login. Tente novamente mais tarde. Erro - ${error.response.data.message}`)
+            showErrorMessage('Erro ao cadastrar usuário', error)
         }
         console.log(values)
     }
@@ -91,19 +92,6 @@ export default function Register() {
                     </button>
                 </div>
             </form>
-            <ToastContainer
-                position="bottom-center"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-            />
-
         </AuthTemplate>
     )
 }

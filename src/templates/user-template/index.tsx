@@ -2,6 +2,7 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import {PropsWithChildren, useEffect} from "react";
 import {useLocation} from "react-router-dom";
+import {ToastContainer} from "react-toastify";
 
 type UserTemplateProps = PropsWithChildren
 
@@ -18,6 +19,18 @@ export default function UserTemplate(props: UserTemplateProps) {
             <div className='flex flex-1 flex-col px-[10%] py-[20px]'>
                 {props.children}
             </div>
+            <ToastContainer
+                position="bottom-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
             <Footer/>
         </div>
     )

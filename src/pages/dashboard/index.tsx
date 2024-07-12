@@ -1,11 +1,19 @@
-import AdminTemplate from "../../templates/admin-template";
-import {Carousel} from "react-responsive-carousel";
-import {IoFastFoodOutline, IoSearch} from "react-icons/io5";
-import {useNavigate} from "react-router-dom";
+import CardProduct from "../../components/card-product";
 import {LuGamepad2} from "react-icons/lu";
 import {GiClothes} from "react-icons/gi";
 import {AiFillCar, AiOutlineGift, AiOutlineSync} from "react-icons/ai";
 import {FaTools} from "react-icons/fa";
+import {IoFastFoodOutline, IoSearch} from "react-icons/io5";
+import {Carousel} from 'react-responsive-carousel';
+
+import {Link, useNavigate} from "react-router-dom";
+import {getApiRecentProducts, getApiRecommendedProducts} from "./services.ts";
+import {useEffect, useState} from "react";
+import ListLoading from "../../components/list-loading";
+import 'react-toastify/dist/ReactToastify.css';
+import {showErrorMessage} from "../../services/toastUtil.ts";
+import {Product} from "../home/types.ts";
+import AdminTemplate from "../../templates/admin-template";
 
 const itemsCategory = [
     {
@@ -50,8 +58,45 @@ export default function Dashboard() {
 
     const navigate = useNavigate()
 
+    const [recentProducts, setRecentProducts] = useState<Product[]>([])
+    const [loadingRecentProducts, setLoadingRecentProducts] = useState<boolean>(true)
+    const [recommendedProducts, setRecommendedProducts] = useState<Product[]>([])
+    const [loadingRecommendedProducts, setLoadingRecommendedProducts] = useState<boolean>(true)
+    const [inputProductToSearch, setInputProductToSearch] = useState<string>('')
+
+    async function getRecentProducts() {
+        try {
+            setLoadingRecentProducts(true)
+            const response = await getApiRecentProducts()
+            setRecentProducts(response.data)
+        } catch (error: any) {
+            showErrorMessage('Erro ao buscar produtos recentes', error)
+        }
+        setLoadingRecentProducts(false)
+    }
+
+    async function getRecommendedProducts() {
+        try {
+            setLoadingRecommendedProducts(true)
+            const response = await getApiRecommendedProducts()
+            setRecommendedProducts(response.data)
+        } catch (error: any) {
+            showErrorMessage('Erro ao buscar produtos recomendados', error)
+        }
+        setLoadingRecommendedProducts(false)
+    }
+
+    useEffect(() => {
+        getRecentProducts()
+    }, [])
+
+    useEffect(() => {
+        getRecommendedProducts()
+    }, [])
+
     return (
         <AdminTemplate>
+
             <div className='max-w-[70%] self-center'>
                 <Carousel showThumbs={false}>
                     <div>
@@ -65,27 +110,33 @@ export default function Dashboard() {
                     </div>
                 </Carousel>
                 <div className='flex flex-row border-2 rounded-md h-[45px] items-center mt-10'>
-                    <input className='flex-1 h-full p-3' placeholder='Estou buscando por...'/>
-                    <button className='px-4' onClick={() => navigate('/products/search')}>
+                    <input className='flex-1 h-full p-3' placeholder='Estou buscando por...'
+                           onChange={(e) => setInputProductToSearch(e.target.value)}
+                    />
+                    <button className='px-4' onClick={() => navigate(`/products/search/${inputProductToSearch}`)}>
                         <IoSearch size={30}/>
                     </button>
                 </div>
             </div>
 
             <h2 className='mt-[50px]'>Itens recentes</h2>
-            <div className='grid grid-4 lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2'>
-                {/*<CardProduct/><CardProduct/><CardProduct/><CardProduct/>*/}
-                {/*<CardProduct/><CardProduct/><CardProduct/><CardProduct/>*/}
+            {loadingRecentProducts && <ListLoading/>}
+            <div className='grid grid-4 lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2'>
+                {recentProducts.map((product) => (
+                    <CardProduct key={`recent-${product._id}`} product={product}/>
+                ))}
             </div>
-            <p className='mt-4'>Ver mais</p>
+            <Link to='/all-recent-products'>
+                <p className='mt-4'>Ver todos os produtos recentes</p>
+            </Link>
 
             <div className='bg-primary p-10 rounded-lg mt-[50px]'>
                 <h2 className='text-white text-[20px] mb-5'>
                     Categorias
                 </h2>
                 <div className='flex justify-between px-[10%]'>
-                    {itemsCategory.map((category) => (
-                        <button onClick={() => navigate('/products/search')}
+                    {itemsCategory.map((category, index) => (
+                        <button key={index} onClick={() => navigate('/products/search')}
                                 className='flex flex-col justify-center items-center'>
                             <div
                                 className='bg-white w-[80px] h-[80px] rounded-full flex justify-center items-center'>{category.icon}</div>
@@ -97,11 +148,15 @@ export default function Dashboard() {
             </div>
 
             <h2 className='mt-[50px]'>Anúncios</h2>
-            <div className='grid grid-4 lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2'>
-                {/*<CardProduct/><CardProduct/><CardProduct/><CardProduct/>*/}
-                {/*<CardProduct/><CardProduct/><CardProduct/><CardProduct/>*/}
+            {loadingRecommendedProducts && <ListLoading/>}
+            <div className='grid grid-4 lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2'>
+                {recommendedProducts.map((product) => (
+                    <CardProduct key={`recommended-${product._id}`} product={product}/>
+                ))}
             </div>
-            <p className='mt-4'>Ver mais</p>
+            <Link to='/all-products'>
+                <p className='mt-4'>Ver todos os produtos</p>
+            </Link>
         </AdminTemplate>
     )
 }

@@ -5,7 +5,7 @@ import {getApiProductById} from "./services.ts";
 import {Product} from "../home/types.ts";
 import {useEffect, useState} from "react";
 import ProductLoading from "../../components/product-loading";
-import {toast, ToastContainer} from "react-toastify";
+import {showErrorMessage} from "../../services/toastUtil.ts";
 
 export default function Details() {
 
@@ -19,7 +19,7 @@ export default function Details() {
             const response = await getApiProductById(productId!)
             setProduct(response.data)
         } catch (error: any) {
-            toast.error(`Erro ao buscar o produto - ${error.message}`)
+            showErrorMessage('Erro ao buscar o produto', error)
         }
         setLoadingProduct(false)
     }
@@ -64,18 +64,6 @@ export default function Details() {
                 <div className='mt-3' dangerouslySetInnerHTML={{__html: product.description}}>
                 </div>
             </>}
-            <ToastContainer
-                position="bottom-center"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-            />
         </UserTemplate>
     )
 }
