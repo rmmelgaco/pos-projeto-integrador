@@ -27,7 +27,7 @@ Modal.setAppElement('#root');
 
 export default function CardProductAdmin({product, setMyProducts}: CardProductAdminProps) {
 
-    const [modalIsOpen, setIsOpen] = useState(false);
+    const [isModalOpened, setIsModalOpened] = useState(false);
     const {token} = useAuthSessionStore()
 
     async function removeProduct() {
@@ -35,10 +35,10 @@ export default function CardProductAdmin({product, setMyProducts}: CardProductAd
             await removeApiProduct(product._id, token)
             const response = await getApiMyProducts(token)
             setMyProducts(response.data)
-            setIsOpen(false)
+            setIsModalOpened(false)
             toast.success('Produto excluído com sucesso!')
         } catch (error) {
-            setIsOpen(false)
+            setIsModalOpened(false)
             showErrorMessage('Erro ao excluir produto', error)
         }
     }
@@ -61,14 +61,14 @@ export default function CardProductAdmin({product, setMyProducts}: CardProductAd
                             <AiOutlineEdit size={25}/>
                         </button>
                         <button>
-                            <AiOutlineDelete onClick={() => setIsOpen(true)} size={25}/>
+                            <AiOutlineDelete onClick={() => setIsModalOpened(true)} size={25}/>
                         </button>
                     </div>
                 </div>
             </button>
             <Modal
-                isOpen={modalIsOpen}
-                onRequestClose={() => setIsOpen(false)}
+                isOpen={isModalOpened}
+                onRequestClose={() => setIsModalOpened(false)}
                 style={customStyles}
             >
                 <h1 className='text-[20px] font-bold mb-2'>Excluir produto</h1>
@@ -81,7 +81,7 @@ export default function CardProductAdmin({product, setMyProducts}: CardProductAd
                     </button>
                     <button
                         className='bg-white text-primary border border-primary px-8 py-2 rounded-lg'
-                        onClick={() => setIsOpen(false)}
+                        onClick={() => setIsModalOpened(false)}
                     >
                         Não
                     </button>

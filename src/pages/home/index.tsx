@@ -14,6 +14,7 @@ import {Product} from "./types.ts";
 import ListLoading from "../../components/list-loading";
 import 'react-toastify/dist/ReactToastify.css';
 import {showErrorMessage} from "../../services/toastUtil.ts";
+import {useAuthSessionStore} from "../../hooks/use-auth-session.ts";
 
 const itemsCategory = [
     {
@@ -57,6 +58,7 @@ const itemsCategory = [
 export default function Home() {
 
     const navigate = useNavigate()
+    const {token} = useAuthSessionStore()
 
     const [recentProducts, setRecentProducts] = useState<Product[]>([])
     const [loadingRecentProducts, setLoadingRecentProducts] = useState<boolean>(true)
@@ -87,9 +89,14 @@ export default function Home() {
     }
 
     useEffect(() => {
-        getRecentProducts()
+        if (token) {
+            navigate('/dashboard')
+        }
     }, [])
 
+    useEffect(() => {
+        getRecentProducts()
+    }, [])
     useEffect(() => {
         getRecommendedProducts()
     }, [])
