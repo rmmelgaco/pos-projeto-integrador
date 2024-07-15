@@ -138,7 +138,7 @@ export default function FormProductEdit() {
                         </button>
                         <button
                             className='bg-white text-primary border border-primary px-8 py-2 rounded-lg'
-                            onClick={() => alert('nao')}
+                            onClick={() => navigate('/my-products')}
                         >
                             Cancelar
                         </button>

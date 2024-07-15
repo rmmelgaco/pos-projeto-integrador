@@ -1,5 +1,6 @@
 import {useNavigate} from "react-router-dom";
 import {CardProductProps} from "./types.ts";
+import {formatPrice} from "../../util/format-price.ts";
 
 export default function CardProduct({product}: CardProductProps) {
 
@@ -10,7 +11,7 @@ export default function CardProduct({product}: CardProductProps) {
             <h1 className='text-center'>{product.name}</h1>
             <img src={product.url1} className='w-[100px] mt-2' alt='Imagem do produto'/>
             <p className='w-full mt-3'>{product.manufacturer}</p>
-            <p className='w-full text-[25px]'>R$ {product.price}</p>
+            <p className='w-full text-[25px]'>{formatPrice(product.price)}</p>
         </button>
     )
 }

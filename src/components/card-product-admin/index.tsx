@@ -8,6 +8,7 @@ import {getApiMyProducts} from "../../pages/user-products/services.ts";
 import {useAuthSessionStore} from "../../hooks/use-auth-session.ts";
 import {toast} from "react-toastify";
 import {CardProductAdminProps} from "./types.ts";
+import {formatPrice} from "../../util/format-price.ts";
 
 const customStyles = {
     overlay: {
@@ -54,7 +55,7 @@ export default function CardProductAdmin({product, setMyProducts}: CardProductAd
                 <div className='flex items-end flex-row'>
                     <div>
                         <p className='w-full mt-3'>{product.manufacturer}</p>
-                        <p className='w-full text-[25px]'>R$ {product.price}</p>
+                        <p className='w-full text-[25px]'>{formatPrice(product.price)}</p>
                     </div>
                     <div className='ml-2 flex flex-col gap-1'>
                         <button onClick={() => navigate(`/form-product-edit/${product._id}`)}>

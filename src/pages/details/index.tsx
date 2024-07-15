@@ -6,6 +6,7 @@ import {Product} from "../home/types.ts";
 import {useEffect, useState} from "react";
 import ProductLoading from "../../components/product-loading";
 import {showErrorMessage} from "../../services/toastUtil.ts";
+import {formatPrice} from "../../util/format-price.ts";
 
 export default function Details() {
 
@@ -47,13 +48,13 @@ export default function Details() {
                     <div>
                         <div className='shadow-sm bg-white px-10 mt-4'>
                             <p>Informações do vendedor</p>
-                            <p>Rodrigo de Melo Melgaço</p>
-                            <p>Brasília DF</p>
-                            <p>Email: xxx@yyy.com</p>
-                            <p>Telefone: (61) 99999-9999</p>
+                            <p>{product.user?.name || '-'}</p>
+                            <p>{product.user?.city || '-'} {product.user?.state || ''}</p>
+                            <p>Email: {product.user?.email || '-'}</p>
+                            <p>Telefone: {product.user?.phone || '-'}</p>
                         </div>
                         <div className='shadow-sm bg-white px-10 py-2'>
-                            <p className='text-[30px]'>R$ {product.price}</p>
+                            <p className='text-[30px]'>{formatPrice(product.price)}</p>
                         </div>
                     </div>
                 </div>
@@ -61,7 +62,7 @@ export default function Details() {
                 <h3 className='mt-10 text-[20px]'>
                     Detalhes do produto
                 </h3>
-                <div className='mt-3' dangerouslySetInnerHTML={{__html: product.description}}>
+                <div className='mt-3' dangerouslySetInnerHTML={{__html: product.description!}}>
                 </div>
             </>}
         </UserTemplate>
