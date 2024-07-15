@@ -12,6 +12,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import AdminTemplate from "../../templates/admin-template";
 import {getApiProductById} from "../details/services.ts";
 import {editApiProduct} from "../../components/card-product-admin/services.ts";
+import {useLoadingSession} from "../../hooks/use-loading-session.ts";
 
 const schemaValidation = Yup.object().shape({
     name: Yup.string().required("Nome obrigatório"),
@@ -27,6 +28,7 @@ export default function FormProductEdit() {
 
     const [description, setDescription] = useState<string>()
     const {token} = useAuthSessionStore()
+    const {setLoading} = useLoadingSession()
     const navigate = useNavigate()
     const {productId} = useParams()
     const [product, setProduct] = useState<FormEditProduct>({
@@ -41,12 +43,14 @@ export default function FormProductEdit() {
 
     async function getProductById() {
         try {
+            setLoading(true)
             const response = await getApiProductById(productId!)
             setProduct({...response.data})
             setDescription(response.data.description)
         } catch (error) {
             showErrorMessage('Erro ao recuperar produto pelo id', error)
         }
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -65,12 +69,14 @@ export default function FormProductEdit() {
 
     async function editProduct(values: FormEditProduct) {
         try {
+            setLoading(true)
             await editApiProduct(productId!, {...values, description}, token)
-            toast.success('Produto alterado com sucesso!')
-            setTimeout(() => navigate('/my-products'), 1500);
+            navigate('/my-products')
+            setTimeout(() => toast.success('Produto alterado com sucesso!'), 500);
         } catch (error: any) {
             showErrorMessage('Erro ao alterar produto', error)
         }
+        setLoading(false)
     }
 
     return (

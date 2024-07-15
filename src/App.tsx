@@ -36,7 +36,11 @@ export default function App() {
             element: <Details/>
         },
         {
-            path: "/products/search/:productToSearch",
+            path: "/products/search/:productNameToSearch",
+            element: <SearchProducts/>
+        },
+        {
+            path: "/products/category/:category",
             element: <SearchProducts/>
         },
         {

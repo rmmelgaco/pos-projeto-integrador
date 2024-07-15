@@ -143,7 +143,7 @@ export default function Home() {
                 </h2>
                 <div className='flex justify-between px-[10%]'>
                     {itemsCategory.map((category, index) => (
-                        <button key={index} onClick={() => navigate('/products/search')}
+                        <button key={index} onClick={() => navigate(`/products/category/${category}`)}
                                 className='flex flex-col justify-center items-center'>
                             <div
                                 className='bg-white w-[80px] h-[80px] rounded-full flex justify-center items-center'>{category.icon}</div>

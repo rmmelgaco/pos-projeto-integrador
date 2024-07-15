@@ -7,6 +7,7 @@ import {LoginForm} from "./types.ts";
 import {auth} from "./services.ts";
 import {showErrorMessage} from "../../services/toastUtil.ts";
 import {useAuthSessionStore} from "../../hooks/use-auth-session.ts";
+import {useLoadingSession} from "../../hooks/use-loading-session.ts";
 
 const schemaValidation = Yup.object().shape({
     email: Yup.string().email("Digite um e-mail válido").required("E-mail obrigatório"),
@@ -17,6 +18,7 @@ export default function Login() {
 
     const navigate = useNavigate()
     const {setToken} = useAuthSessionStore()
+    const {setLoading} = useLoadingSession()
 
     const {register, handleSubmit, formState: {errors}}
         = useForm<LoginForm>(
@@ -27,12 +29,14 @@ export default function Login() {
 
     async function logar(values: LoginForm) {
         try {
+            setLoading(true)
             const response = await auth(values)
             setToken(response.data?.token)
             navigate('/dashboard')
         } catch (error: any) {
             showErrorMessage('Erro ao logar', error)
         }
+        setLoading(false)
     }
 
     return (

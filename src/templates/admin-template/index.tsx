@@ -4,6 +4,7 @@ import HeaderAdmin from "../../components/header-admin";
 import {ToastContainer} from "react-toastify";
 import {useAuthSessionStore} from "../../hooks/use-auth-session.ts";
 import {useNavigate} from "react-router-dom";
+import Loading from "../../components/loading";
 
 type AdminTemplateProps = PropsWithChildren & {}
 export default function AdminTemplate(props: AdminTemplateProps) {
@@ -25,8 +26,8 @@ export default function AdminTemplate(props: AdminTemplateProps) {
             </div>
             <ToastContainer
                 position="bottom-center"
-                autoClose={5000}
-                hideProgressBar={false}
+                autoClose={3000}
+                hideProgressBar={true}
                 newestOnTop={false}
                 closeOnClick
                 rtl={false}
@@ -37,6 +38,7 @@ export default function AdminTemplate(props: AdminTemplateProps) {
             />
 
             <Footer/>
+            <Loading/>
         </div>
     )
 }

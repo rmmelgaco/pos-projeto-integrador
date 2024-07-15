@@ -11,6 +11,7 @@ import {toast} from "react-toastify";
 import {showErrorMessage} from "../../services/toastUtil.ts";
 import {useAuthSessionStore} from "../../hooks/use-auth-session.ts";
 import {useNavigate} from "react-router-dom";
+import {useLoadingSession} from "../../hooks/use-loading-session.ts";
 
 const schemaValidation = Yup.object().shape({
     name: Yup.string().required("Nome obrigatório"),
@@ -27,6 +28,7 @@ export default function FormProduct() {
     const [description, setDescription] = useState<string>()
     const {token} = useAuthSessionStore()
     const navigate = useNavigate()
+    const {setLoading} = useLoadingSession()
 
     const {
         register,
@@ -39,13 +41,15 @@ export default function FormProduct() {
 
     async function saveProduct(values: FormNewProduct) {
         try {
+            setLoading(true)
             await saveApiProduct({...values, description}, token)
             reset()
-            toast.success('Produto cadastrado com sucesso!')
-            setTimeout(() => navigate('/my-products'), 3000);
+            navigate('/my-products')
+            setTimeout(() => toast.success('Produto cadastrado com sucesso!'), 500);
         } catch (error: any) {
             showErrorMessage('Erro ao salvar o produto', error)
         }
+        setLoading(false)
     }
 
     return (

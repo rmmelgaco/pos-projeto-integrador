@@ -7,6 +7,7 @@ import {RegisterForm} from "./types.ts";
 import {registerUser} from "./services.ts";
 import {toast} from "react-toastify";
 import {showErrorMessage} from "../../services/toastUtil.ts";
+import {useLoadingSession} from "../../hooks/use-loading-session.ts";
 
 const schemaValidation = Yup.object().shape({
     name: Yup.string().required("Nome obrigatório"),
@@ -20,7 +21,7 @@ const schemaValidation = Yup.object().shape({
 export default function Register() {
 
     const {
-        register, handleSubmit, reset, formState: {errors}
+        register, handleSubmit, formState: {errors}
     }
         = useForm<RegisterForm>(
         {
@@ -28,17 +29,19 @@ export default function Register() {
         })
 
     const navigate = useNavigate()
+    const {setLoading} = useLoadingSession()
 
     async function createUser(values: RegisterForm) {
 
         try {
+            setLoading(true)
             await registerUser(values)
-            toast.success('Usuário cadastrado com sucesso!')
-            reset()
+            navigate('/login')
+            setTimeout(() => toast.success('Usuário cadastrado com sucesso!'), 1000)
         } catch (error: any) {
             showErrorMessage('Erro ao cadastrar usuário', error)
         }
-        console.log(values)
+        setLoading(false)
     }
 
     return (

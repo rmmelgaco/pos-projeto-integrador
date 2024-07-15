@@ -2,31 +2,47 @@ import UserTemplate from "../../templates/user-template";
 import CardProduct from "../../components/card-product";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {getApiAllProductsByName} from "./services.ts";
+import {getApiAllProductsByCategory, getApiAllProductsByName} from "./services.ts";
 import {Product} from "../home/types.ts";
 import ListLoading from "../../components/list-loading";
 import {showErrorMessage} from "../../services/toastUtil.ts";
 
 export default function SearchProducts() {
 
-    const {productToSearch} = useParams()
+    const {productNameToSearch, category} = useParams()
 
     const [allProducts, setAllProducts] = useState<Product[]>([])
     const [loadingAllProducts, setLoadingAllProducts] = useState<boolean>(true)
 
     async function getAllProductsByName() {
-        try {
-            setLoadingAllProducts(true)
-            const response = await getApiAllProductsByName(productToSearch!)
-            setAllProducts(response.data)
-        } catch (error: any) {
-            showErrorMessage('Erro ao buscar produtos pelo nome', error)
+        if (productNameToSearch) {
+            try {
+                setLoadingAllProducts(true)
+                const response = await getApiAllProductsByName(productNameToSearch!)
+                setAllProducts(response.data)
+            } catch (error: any) {
+                showErrorMessage('Erro ao buscar produtos pelo nome', error)
+            }
+            setLoadingAllProducts(false)
         }
-        setLoadingAllProducts(false)
+    }
+
+    async function getAllProductsByCategory() {
+        if (category) {
+            try {
+                setLoadingAllProducts(true)
+                const response = await getApiAllProductsByCategory(category!)
+                setAllProducts(response.data)
+            } catch (error: any) {
+                showErrorMessage('Erro ao buscar produtos pela categoria', error)
+            }
+            setLoadingAllProducts(false)
+        }
     }
 
     useEffect(() => {
         getAllProductsByName()
+        getAllProductsByCategory()
     }, [])
 
     return (

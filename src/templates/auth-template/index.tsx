@@ -2,6 +2,7 @@ import {PropsWithChildren} from "react";
 import Footer from "../../components/footer";
 import {useNavigate} from "react-router-dom";
 import {ToastContainer} from "react-toastify";
+import Loading from "../../components/loading";
 
 type AuthTemplateProps = PropsWithChildren & {}
 export default function AuthTemplate(props: AuthTemplateProps) {
@@ -21,8 +22,8 @@ export default function AuthTemplate(props: AuthTemplateProps) {
             </div>
             <ToastContainer
                 position="bottom-center"
-                autoClose={5000}
-                hideProgressBar={false}
+                autoClose={3000}
+                hideProgressBar={true}
                 newestOnTop={false}
                 closeOnClick
                 rtl={false}
@@ -33,6 +34,7 @@ export default function AuthTemplate(props: AuthTemplateProps) {
             />
 
             <Footer/>
+           <Loading/>
         </div>
     )
 }

@@ -21,8 +21,8 @@ export default function UserTemplate(props: UserTemplateProps) {
             </div>
             <ToastContainer
                 position="bottom-center"
-                autoClose={5000}
-                hideProgressBar={false}
+                autoClose={3000}
+                hideProgressBar={true}
                 newestOnTop={false}
                 closeOnClick
                 rtl={false}

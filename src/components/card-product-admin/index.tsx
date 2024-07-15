@@ -9,6 +9,7 @@ import {useAuthSessionStore} from "../../hooks/use-auth-session.ts";
 import {toast} from "react-toastify";
 import {CardProductAdminProps} from "./types.ts";
 import {formatPrice} from "../../util/format-price.ts";
+import {useLoadingSession} from "../../hooks/use-loading-session.ts";
 
 const customStyles = {
     overlay: {
@@ -30,9 +31,11 @@ export default function CardProductAdmin({product, setMyProducts}: CardProductAd
 
     const [isModalOpened, setIsModalOpened] = useState(false);
     const {token} = useAuthSessionStore()
+    const {setLoading} = useLoadingSession()
 
     async function removeProduct() {
         try {
+            setLoading(true)
             await removeApiProduct(product._id, token)
             const response = await getApiMyProducts(token)
             setMyProducts(response.data)
@@ -42,6 +45,7 @@ export default function CardProductAdmin({product, setMyProducts}: CardProductAd
             setIsModalOpened(false)
             showErrorMessage('Erro ao excluir produto', error)
         }
+        setLoading(false)
     }
 
     const navigate = useNavigate()
