@@ -8,7 +8,7 @@ export default function Loading() {
 
     return (loading &&
         <div className="loading-overlay">
-            <ReactLoading type={'spin'} color={'blue'} className='bg-white rounded-lg' height={50} width={50}/>
+            <ReactLoading type={'spin'} color={'blue'} className='bg-white rounded-lg' height={60} width={60}/>
         </div>
     )
 }
