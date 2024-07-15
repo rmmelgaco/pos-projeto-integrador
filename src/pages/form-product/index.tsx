@@ -9,10 +9,12 @@ import {FormNewProduct} from "./types.ts";
 import {saveApiProduct} from "./services.ts";
 import {toast} from "react-toastify";
 import {showErrorMessage} from "../../services/toastUtil.ts";
+import {useAuthSessionStore} from "../../hooks/use-auth-session.ts";
+import {useNavigate} from "react-router-dom";
 
 const schemaValidation = Yup.object().shape({
     name: Yup.string().required("Nome obrigatório"),
-    manufactorer: Yup.string().required("Fabricante obrigatório"),
+    manufacturer: Yup.string().required("Fabricante obrigatório"),
     category: Yup.string().required("Categoria obrigatória"),
     price: Yup.number().required("Preço obrigatória"),
     url1: Yup.string().required("Url1 obrigatória"),
@@ -23,19 +25,24 @@ const schemaValidation = Yup.object().shape({
 export default function FormProduct() {
 
     const [description, setDescription] = useState<string>()
+    const {token} = useAuthSessionStore()
+    const navigate = useNavigate()
 
     const {
         register,
         handleSubmit,
-        formState: {errors}
+        formState: {errors},
+        reset
     } = useForm<FormNewProduct>({
         resolver: yupResolver(schemaValidation)
     })
 
     async function saveProduct(values: FormNewProduct) {
         try {
-            await saveApiProduct({...values, description}, 'xxx')
+            await saveApiProduct({...values, description}, token)
+            reset()
             toast.success('Produto cadastrado com sucesso!')
+            setTimeout(() => navigate('/my-products'), 3000);
         } catch (error: any) {
             showErrorMessage('Erro ao salvar o produto', error)
         }
@@ -56,8 +63,8 @@ export default function FormProduct() {
                         <div className='flex-1'>
                             <input
                                 className='w-full border-2 h-[40px] px-2 rounded-md'
-                                {...register("manufactorer")} type="text" placeholder="Nome do fabricante"/>
-                            {errors.manufactorer && <span className='text-red-600'>{errors.manufactorer.message}</span>}
+                                {...register("manufacturer")} type="text" placeholder="Nome do fabricante"/>
+                            {errors.manufacturer && <span className='text-red-600'>{errors.manufacturer.message}</span>}
                         </div>
                     </div>
                     <div className='flex gap-2'>
@@ -68,6 +75,10 @@ export default function FormProduct() {
                                 <option value={"Jogos"}>Jogos</option>
                                 <option value={"Roupas"}>Roupas</option>
                                 <option value={"Veiculos"}>Veículos</option>
+                                <option value={"Ferramentas"}>Ferramentas</option>
+                                <option value={"Comidas"}>Comidas</option>
+                                <option value={"Presentes"}>Presentes</option>
+                                <option value={"Outros"}>Outros</option>
                             </select>
 
                             {errors.category && <span className='text-red-600'>{errors.category.message}</span>}

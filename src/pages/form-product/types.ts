@@ -1,6 +1,6 @@
 export type FormNewProduct = {
     name: string;
-    manufactorer: string;
+    manufacturer: string;
     category: string;
     price: number;
     url1: string;

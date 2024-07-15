@@ -45,7 +45,11 @@ export default function UserProducts() {
 
             <div className='grid grid-4 lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2'>
                 {myProducts.map((product) => (
-                    <CardProductAdmin key={`my-product-${product._id}`} product={product}/>
+                    <CardProductAdmin
+                        key={`my-product-${product._id}`}
+                        product={product}
+                        setMyProducts={setMyProducts}
+                    />
                 ))}
             </div>
 

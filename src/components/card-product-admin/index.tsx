@@ -3,6 +3,11 @@ import {AiOutlineDelete, AiOutlineEdit} from "react-icons/ai";
 import Modal from 'react-modal';
 import {useState} from "react";
 import {CardProductProps} from "../card-product/types.ts";
+import {removeApiProduct} from "./services.ts";
+import {showErrorMessage} from "../../services/toastUtil.ts";
+import {getApiMyProducts} from "../../pages/user-products/services.ts";
+import {useAuthSessionStore} from "../../hooks/use-auth-session.ts";
+import {toast} from "react-toastify";
 
 const customStyles = {
     overlay: {
@@ -20,9 +25,24 @@ const customStyles = {
 
 Modal.setAppElement('#root');
 
-export default function CardProductAdmin({product}: CardProductProps) {
+export default function CardProductAdmin({product, setMyProducts}: CardProductProps) {
 
     const [modalIsOpen, setIsOpen] = useState(false);
+
+    const {token} = useAuthSessionStore()
+
+    async function removeProduct() {
+        try {
+            await removeApiProduct(product._id, token)
+            const response = await getApiMyProducts(token)
+            setMyProducts(response.data)
+            setIsOpen(false)
+            toast.success('Produto excluído com sucesso!')
+        } catch (error) {
+            setIsOpen(false)
+            showErrorMessage('Erro ao excluir produto', error)
+        }
+    }
 
     const navigate = useNavigate()
     return (
@@ -55,7 +75,9 @@ export default function CardProductAdmin({product}: CardProductProps) {
                 <h1 className='text-[20px] font-bold mb-2'>Excluir produto</h1>
                 <p>Deseja realmente excluir este produto?</p>
                 <div className='flex justify-center gap-4 mt-4'>
-                    <button className='bg-primary text-white px-8 py-2 rounded-lg'>
+                    <button
+                        onClick={() => removeProduct()}
+                        className='bg-primary text-white px-8 py-2 rounded-lg'>
                         Sim
                     </button>
                     <button
