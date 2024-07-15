@@ -9,6 +9,40 @@ import {toast} from "react-toastify";
 import {showErrorMessage} from "../../services/toastUtil.ts";
 import {useLoadingSession} from "../../hooks/use-loading-session.ts";
 
+const estadosBrasil = [
+    {sigla: 'AC', nome: 'Acre'},
+    {sigla: 'AL', nome: 'Alagoas'},
+    {sigla: 'AP', nome: 'Amapá'},
+    {sigla: 'AM', nome: 'Amazonas'},
+    {sigla: 'BA', nome: 'Bahia'},
+    {sigla: 'CE', nome: 'Ceará'},
+    {sigla: 'DF', nome: 'Distrito Federal'},
+    {sigla: 'ES', nome: 'Espírito Santo'},
+    {sigla: 'GO', nome: 'Goiás'},
+    {sigla: 'MA', nome: 'Maranhão'},
+    {sigla: 'MT', nome: 'Mato Grosso'},
+    {sigla: 'MS', nome: 'Mato Grosso do Sul'},
+    {sigla: 'MG', nome: 'Minas Gerais'},
+    {sigla: 'PA', nome: 'Pará'},
+    {sigla: 'PB', nome: 'Paraíba'},
+    {sigla: 'PR', nome: 'Paraná'},
+    {sigla: 'PE', nome: 'Pernambuco'},
+    {sigla: 'PI', nome: 'Piauí'},
+    {sigla: 'RJ', nome: 'Rio de Janeiro'},
+    {sigla: 'RN', nome: 'Rio Grande do Norte'},
+    {sigla: 'RS', nome: 'Rio Grande do Sul'},
+    {sigla: 'RO', nome: 'Rondônia'},
+    {sigla: 'RR', nome: 'Roraima'},
+    {sigla: 'SC', nome: 'Santa Catarina'},
+    {sigla: 'SP', nome: 'São Paulo'},
+    {sigla: 'SE', nome: 'Sergipe'},
+    {sigla: 'TO', nome: 'Tocantins'}
+];
+
+// Exemplo de como acessar os dados
+console.log(estadosBrasil);
+
+
 const schemaValidation = Yup.object().shape({
     name: Yup.string().required("Nome obrigatório"),
     email: Yup.string().email("Digite um e-mail válido").required("E-mail obrigatório"),
@@ -75,9 +109,13 @@ export default function Register() {
                     {errors.city && <span className='text-red-700'>{errors.city.message}</span>}
                 </div>
                 <div>
-                    <input {...register('state')} type="text"
-                           className='w-full border-2 h-[40px] px-2 rounded-md mt-2'
-                           placeholder='Digite seu estado'/>
+                    <select {...register("state")}
+                            className='w-full border-2 h-[40px] px-2 rounded-md mt-2'
+                    >
+                        <option disabled selected value=''>Selecione uma opção</option>
+                        {estadosBrasil.map(estado => <option value={estado.sigla}>{estado.nome}</option>)}
+                    </select>
+
                     {errors.state && <span className='text-red-700'>{errors.state.message}</span>}
                 </div>
                 <div>
