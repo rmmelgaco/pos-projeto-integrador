@@ -1,5 +1,4 @@
-export type Product = {
-    _id: string;
+export type FormEditProduct = {
     name: string;
     manufacturer: string;
     category: string;
@@ -7,4 +6,4 @@ export type Product = {
     url1: string;
     url2: string;
     description?: string;
-};
+}

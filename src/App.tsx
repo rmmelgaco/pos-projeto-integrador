@@ -14,6 +14,7 @@ import FormProduct from "./pages/form-product";
 import FaleConosco from "./pages/fale-conosco";
 import FaleConoscoAdmin from "./pages/fale-conosco-admin";
 import ListAllProducts from "./pages/list-all-products";
+import FormProductEdit from "./pages/form-product-edit";
 
 export default function App() {
 
@@ -61,6 +62,10 @@ export default function App() {
         {
             path: '/form-product',
             element: <FormProduct/>
+        },
+        {
+            path: '/form-product-edit/:productId',
+            element: <FormProductEdit/>
         },
         {
             path: '/fale-conosco',

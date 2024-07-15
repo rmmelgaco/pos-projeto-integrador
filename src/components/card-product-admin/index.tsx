@@ -2,12 +2,12 @@ import {useNavigate} from "react-router-dom";
 import {AiOutlineDelete, AiOutlineEdit} from "react-icons/ai";
 import Modal from 'react-modal';
 import {useState} from "react";
-import {CardProductProps} from "../card-product/types.ts";
 import {removeApiProduct} from "./services.ts";
 import {showErrorMessage} from "../../services/toastUtil.ts";
 import {getApiMyProducts} from "../../pages/user-products/services.ts";
 import {useAuthSessionStore} from "../../hooks/use-auth-session.ts";
 import {toast} from "react-toastify";
+import {CardProductAdminProps} from "./types.ts";
 
 const customStyles = {
     overlay: {
@@ -25,10 +25,9 @@ const customStyles = {
 
 Modal.setAppElement('#root');
 
-export default function CardProductAdmin({product, setMyProducts}: CardProductProps) {
+export default function CardProductAdmin({product, setMyProducts}: CardProductAdminProps) {
 
     const [modalIsOpen, setIsOpen] = useState(false);
-
     const {token} = useAuthSessionStore()
 
     async function removeProduct() {
@@ -58,7 +57,7 @@ export default function CardProductAdmin({product, setMyProducts}: CardProductPr
                         <p className='w-full text-[25px]'>R$ {product.price}</p>
                     </div>
                     <div className='ml-2 flex flex-col gap-1'>
-                        <button onClick={() => navigate('/form-product')}>
+                        <button onClick={() => navigate(`/form-product-edit/${product._id}`)}>
                             <AiOutlineEdit size={25}/>
                         </button>
                         <button>
