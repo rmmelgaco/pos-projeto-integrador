@@ -18,15 +18,14 @@ const schemaValidation = Yup.object().shape({
     name: Yup.string().required("Nome obrigatório"),
     manufacturer: Yup.string().required("Fabricante obrigatório"),
     category: Yup.string().required("Categoria obrigatória"),
-    price: Yup.number().required("Preço obrigatória"),
-    url1: Yup.string().required("Url1 obrigatória"),
-    url2: Yup.string().required("Url2 obrigatória"),
-    description: Yup.string()
+    price: Yup.number().required("Preço obrigatória").typeError("Preço deve ser um número"),
+    url1: Yup.string().required("Url1 obrigatória").url("Preencha uma url válida"),
+    url2: Yup.string().required("Url2 obrigatória").url("Preencha uma url válida"),
+    description: Yup.string().required("Descrição é obrigatória")
 })
 
 export default function FormProductEdit() {
 
-    const [description, setDescription] = useState<string>()
     const {token} = useAuthSessionStore()
     const {setLoading} = useLoadingSession()
     const navigate = useNavigate()
@@ -46,7 +45,6 @@ export default function FormProductEdit() {
             setLoading(true)
             const response = await getApiProductById(productId!)
             setProduct({...response.data})
-            setDescription(response.data.description)
         } catch (error) {
             showErrorMessage('Erro ao recuperar produto pelo id', error)
         }
@@ -61,16 +59,18 @@ export default function FormProductEdit() {
         register,
         handleSubmit,
         formState: {errors},
+        setValue,
+        getValues
     } = useForm<FormEditProduct>({
         resolver: yupResolver(schemaValidation),
         defaultValues: product,
-        values: product
-    })
+        values: product})
 
     async function editProduct(values: FormEditProduct) {
         try {
+            debugger
             setLoading(true)
-            await editApiProduct(productId!, {...values, description}, token)
+            await editApiProduct(productId!, {...values}, token)
             navigate('/my-products')
             setTimeout(() => toast.success('Produto alterado com sucesso!'), 500);
         } catch (error: any) {
@@ -137,7 +137,7 @@ export default function FormProductEdit() {
                     </div>
                     <ReactQuill theme="snow"
                                 style={{height: 500, marginTop: 10, marginBottom: 100}}
-                                value={description} onChange={setDescription}/>
+                                value={getValues().description} onChange={value => setValue('description', value)}/>
                     <div className='flex justify-end gap-4 mt-4'>
                         <button type='submit' className='bg-primary text-white px-8 py-2 rounded-lg'>
                             Salvar
